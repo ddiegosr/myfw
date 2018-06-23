@@ -26,12 +26,12 @@ class View extends Tokenizer
         $this->setConstructRule("/@yield ?\('(.*)'\)/");
     }
 
-    public function getLayout(): string
+    private function getLayout(): string
     {
         return $this->layout;
     }
 
-    public function setLayout(string $view): void
+    private function setLayout(string $view): void
     {
         $file = fopen($view, 'r');
 
@@ -47,12 +47,12 @@ class View extends Tokenizer
         fclose($file);
     }
 
-    public function getBlocks(): array
+    private function getBlocks(): array
     {
         return $this->blocks;
     }
 
-    public function compile(string $view): string
+    private function compile(string $view): string
     {
         $tempView = $view;
 
@@ -63,7 +63,7 @@ class View extends Tokenizer
         return $tempView;
     }
 
-    public function setBlocks(string $view): void
+    private function setBlocks(string $view): void
     {
         $file = fopen($view, 'r');
 
@@ -77,7 +77,7 @@ class View extends Tokenizer
             }
 
             $contentBlocks[$sectionName] .= $line;
-            
+
             if (preg_match($this->getSectionRuleByKey('closingTag'), $line, $matches)) {
                 $sectionName = '';
             }
@@ -97,7 +97,7 @@ class View extends Tokenizer
         $this->blocks = $newBlocks;
     }
 
-    public function compileLayout(string $layoutName): string
+    private function compileLayout(string $layoutName): string
     {
         $file = fopen($layoutName, 'r');
         $result = '';
