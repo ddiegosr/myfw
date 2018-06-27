@@ -15,7 +15,8 @@ class View extends Tokenizer
         $this->addRule('/{ ?\$([\w\d]+)(\+\+|\-\-) ?}/', '<?php $$1$2 ?>');
         $this->addRule('/{ ?\$([\w\d]+)\.(\d*) ?}/', '<?= $$1[$2] ?>');
         $this->addRule('/{ ?\$([\w\d]+)\.(\w*) ?}/', "<?= $$1['$2'] ?>");
-        $this->addRule('/{ ?\$([\w\d]+)->(\w*) ?}/', "<?= $$1->$2 ?>");
+/*        $this->addRule('/{ ?\$([\w\d]+)->(\w*) ?}/', "<?= $$1->$2 ?>");*/
+        $this->addRule('/{ ?\$([\w\d]+)->(.*) ?}/', "<?= $$1->$2 ?>");
         $this->addRule('/@if ?\((.*)\)/', '<?php if($1): ?>');
         $this->addRule('/@elseif ?\((.*)\)/', '<?php elseif($1): ?>');
         $this->addRule('/@else/', '<?php else: ?>');
