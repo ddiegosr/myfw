@@ -7,6 +7,7 @@ class View extends Tokenizer
 {
     private $layout;
     private $blocks = [];
+    private static $instance;
 
     public function __construct()
     {
@@ -28,6 +29,15 @@ class View extends Tokenizer
         $this->setLayoutRule("/@extends ?\('(.*)'\)/");
         $this->setSectionRule("/@section ?\('(.*)'\)/", '/@endsection/');
         $this->setConstructRule("/@yield ?\('(.*)'\)/");
+    }
+
+    public static function getInstance(): View{
+        if (!isset(self::$instance)){
+            $class = __CLASS__;
+            self::$instance = new $class();
+        }
+
+        return self::$instance;
     }
 
     private function getLayout(): string
@@ -119,6 +129,12 @@ class View extends Tokenizer
         }
         fclose($file);
         return $result;
+    }
+
+    public function registerFunction(Callable $functionName): void{
+        $pattern = '/@'.$functionName.'\((.*)\)/';
+        $replace = '<?php '.$functionName.'($1) ?>';
+        $this->addRule($pattern, $replace);
     }
 
     public function render(string $view, array $data = []): void

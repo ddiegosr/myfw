@@ -8,5 +8,11 @@ function dd($dump): void
 
 function view(string $view, array $data = []): void
 {
-    (new \Core\View())->render($view, $data);
+    $viewObject = \Core\View::getInstance();
+    $viewObject->render($view, $data);
+}
+
+function view_register_function(Callable $functionName): void{
+    $viewObject = \Core\View::getInstance();
+    $viewObject->registerFunction($functionName);
 }
