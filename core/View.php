@@ -155,7 +155,12 @@ class View extends Tokenizer
             $content = $this->compile($viewContent);
         }
 
-        eval(' ?> ' . $content . '<?php ');
+        try{
+            eval('?>'.$content.'<?php');
+        } catch (\Error $e) {
+            throw new \ErrorException($e->getMessage(), $e->getCode(), E_ERROR, $view, $e->getLine());
+        }
+
     }
 
 }
