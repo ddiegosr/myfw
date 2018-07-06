@@ -6,8 +6,8 @@
   "autoload": {
     "psr-4": {
       "App\\": "app/",
-      "Core\\": "core/"
+      "MyFw\\": "src/fw"
     },
-    "files": ["core/helpers.php"]
+    "files": ["src/fw/helpers.php"]
   }
 }

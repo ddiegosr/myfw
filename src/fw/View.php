@@ -1,6 +1,6 @@
 <?php
 
-namespace Core;
+namespace MyFw;
 
 
 class View extends Tokenizer
@@ -143,7 +143,7 @@ class View extends Tokenizer
             extract($data);
         }
 
-        $view = __DIR__ . "/../app/views/{$view}.phtml";
+        $view = __DIR__ . "/../../app/views/{$view}.phtml";
         $this->setLayout($view);
 
         if ($this->layout != null) {

@@ -6,7 +6,7 @@
  * Time: 22:11
  */
 
-namespace Core;
+namespace MyFw;
 
 
 class Tokenizer
