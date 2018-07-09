@@ -3,10 +3,10 @@
 return [
 
     'database' => [
-        'username' => 'local',
-        'password' => 'root',
-        'host' => 'localhost',
-        'database' => 'myfw',
+        'username' => '',
+        'password' => '',
+        'host' => '',
+        'database' => '',
         'charset' => 'UTF8'
     ]
 

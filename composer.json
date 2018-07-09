@@ -1,6 +1,11 @@
 {
+  "name": "ddiegosr/myfw",
+  "description": "A simple micro framework",
+  "authors": [
+    {"name": "Diego Rodrigues", "email":"ddiegosr@hotmail.com"}
+  ],
   "require":{
-    "php": ">=7.2",
+    "php": ">=7.1",
     "filp/whoops": "^2.2"
   },
   "autoload": {
