@@ -156,7 +156,7 @@ class View extends Tokenizer
 
         try{
             eval('?>'.$content.'<?php');
-        } catch (\Error $e) {
+        } catch (\ErrorException | \Error $e) {
             throw new \ErrorException($e->getMessage(), $e->getCode(), E_ERROR, $view, $e->getLine());
         }
 
