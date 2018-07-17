@@ -59,7 +59,7 @@ abstract class Model
     public static function create(array $attributes): bool
     {
         $attributes = static::filterFillable($attributes);
-        $pdo = Database::conn();
+        $pdo = Database::getConn();
         $sql = sprintf("INSERT INTO %s (", static::$table);
         $placeHolders = array_map(function ($name) {
             return ':' . $name;
@@ -89,7 +89,7 @@ abstract class Model
 
     public static function find(int $id): Model
     {
-        $pdo = Database::conn();
+        $pdo = Database::getConn();
         $sql = sprintf("SELECT * FROM %s WHERE id=:id", static::$table);
         $stmt = $pdo->prepare($sql);
         $stmt->bindValue(':id', $id);
@@ -104,7 +104,7 @@ abstract class Model
 
     public static function all(): array
     {
-        $pdo = Database::conn();
+        $pdo = Database::getConn();
         $sql = sprintf("SELECT * FROM %s", static::$table);
         $stmt = $pdo->prepare($sql);
         $stmt->execute();
@@ -124,7 +124,7 @@ abstract class Model
     public function update(array $attributes): int
     {
         $attributes = static::filterFillable($attributes);
-        $pdo = Database::conn();
+        $pdo = Database::getConn();
         $sql = sprintf("UPDATE %s SET ", static::$table);
         $placeHolders = array_map(function ($name) {
             return ':' . $name;
@@ -149,7 +149,7 @@ abstract class Model
 
     public function delete(): int
     {
-        $pdo = Database::conn();
+        $pdo = Database::getConn();
         $sql = sprintf("DELETE FROM %s WHERE id=:id", static::$table);
         $stmt = $pdo->prepare($sql);
         $stmt->bindValue(":id", $this->attributes['id']);
