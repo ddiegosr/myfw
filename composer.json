@@ -6,7 +6,8 @@
   ],
   "require":{
     "php": ">=7.1",
-    "filp/whoops": "^2.2"
+    "filp/whoops": "^2.2",
+    "vlucas/phpdotenv": "^2.5"
   },
   "autoload": {
     "psr-4": {
