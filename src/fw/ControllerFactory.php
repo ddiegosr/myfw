@@ -12,7 +12,6 @@ class ControllerFactory
      *
      * @param string $controllerName
      * @return mixed
-     * @throws \Exception
      */
     public static function build(string $controllerName)
     {

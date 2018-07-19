@@ -142,9 +142,9 @@ class Router
     /**
      * Executa a busca da rota atual no array de rotas registradas
      *
-     * @return mixed
+     * @throws \ErrorException
      */
-    public function run()
+    public function run(): void
     {
         foreach ($this->routes[$this->method] as $uri => $callable) {
             $urlArray = explode('/', $this->uri);
@@ -160,19 +160,17 @@ class Router
 
             if ($uri == $this->uri) {
                 if ($callable instanceof Closure) {
-                    return call_user_func_array($callable, $parameters);
+                    call_user_func_array($callable, $parameters);
+                    return;
                 } else {
                     $controller = $this->extractControllerAction($callable)->controller;
                     $action = $this->extractControllerAction($callable)->action;
-                    try {
-                        return call_user_func_array([ControllerFactory::build($controller), $action], $parameters);
-                    } catch (Exception $e) {
-                        echo $e->getMessage();
-                    }
+                    call_user_func_array([ControllerFactory::build($controller), $action], $parameters);
+                    return;
                 }
                 break;
             }
         }
-        echo "404";
+        view('404', ['uri' => $this->uri]);
     }
 }

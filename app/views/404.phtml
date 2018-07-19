@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>404 - Not found</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        body{
+            font-family: sans-serif;
+        }
+        #wrap{
+            width: 960px;
+            border: 1px solid #ccc;
+            margin: 15px auto 0;
+            background-color: #f1f1f1;
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
+        }
+        #header{
+            font-weight: bold;
+            font-size: 20px;
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
+            background-color: #cccccc;
+            padding: 10px;
+            text-align: center;
+        }
+        #body{
+            height: 35px;
+            font-size: 18px;
+            padding-top: 15px;
+            margin: 0 auto;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div id="wrap">
+        <div id="header">
+            Erro 404 - Página não encontrada
+        </div>
+
+        <div id="body">
+            Desculpe, não conseguimos encontrar a página {$uri}
+        </div>
+
+    </div>
+</body>
+</html>

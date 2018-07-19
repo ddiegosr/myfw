@@ -5,7 +5,7 @@ namespace MyFw\exceptions;
 
 use Throwable;
 
-class ControllerException extends \Exception
+class ControllerException extends \RuntimeException
 {
     public function __construct(string $message = "", int $code = 0, Throwable $previous = null)
     {
