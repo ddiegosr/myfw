@@ -28,7 +28,7 @@ class Router
      * @param string $uri
      * @param string|Closure $callable
      */
-    public function get(string $uri, $callable)
+    public function get(string $uri, $callable): void
     {
         $this->add('GET', $uri, $callable);
     }
@@ -39,7 +39,7 @@ class Router
      * @param string $uri
      * @param string|Closure $callable
      */
-    public function post(string $uri, $callable)
+    public function post(string $uri, $callable): void
     {
         $this->add('POST', $uri, $callable);
     }
@@ -50,7 +50,7 @@ class Router
      * @param string $uri
      * @param string|Closure $callable
      */
-    public function put(string $uri, $callable)
+    public function put(string $uri, $callable): void
     {
         $this->add('PUT', $uri, $callable);
     }
@@ -61,9 +61,38 @@ class Router
      * @param string $uri
      * @param string|Closure $callable
      */
-    public function delete(string $uri, $callable)
+    public function delete(string $uri, $callable): void
     {
         $this->add('DELETE', $uri, $callable);
+    }
+
+    /**
+     * Adiciona grupos de rotas
+     *
+     * @param string $group
+     * @param $routes
+     */
+    public function group(string $group, $routes): void
+    {
+        if (is_array($routes)) {
+            foreach ($routes as $key => $value) {
+                $method = strtolower($value[0]);
+                $uri = $group . $key;
+                $callable = $value[1];
+                $this->$method($uri, $callable);
+            }
+            return;
+        }
+
+        if($routes instanceof Closure){
+            $groupRoutes = $routes();
+            foreach ($groupRoutes as $key => $value) {
+                $method = strtolower($value[0]);
+                $uri = $group . $key;
+                $callable = $value[1];
+                $this->$method($uri, $callable);
+            }
+        }
     }
 
     /**
@@ -73,7 +102,7 @@ class Router
      * @param string $uri
      * @return bool
      */
-    private function routeExists(string $method, string $uri)
+    private function routeExists(string $method, string $uri): bool
     {
         return array_key_exists($uri, $this->routes[$method]);
     }
@@ -85,9 +114,9 @@ class Router
      * @param string $uri
      * @param string|Closure $callable
      */
-    private function add(string $method, string $uri, $callable)
+    private function add(string $method, string $uri, $callable): void
     {
-        if($this->routeExists($method, $uri)){
+        if ($this->routeExists($method, $uri)) {
             echo "Rota $uri duplicada no método $uri";
         } else {
             $this->routes[$method][$uri] = $callable;
@@ -100,7 +129,7 @@ class Router
      * @param string $callable
      * @return \stdClass
      */
-    private function extractControllerAction(string $callable)
+    private function extractControllerAction(string $callable): \stdClass
     {
         $explode = explode('@', $callable);
         $object = new \stdClass();
@@ -120,7 +149,7 @@ class Router
             $urlArray = explode('/', $this->uri);
             $routeArray = explode('/', $uri);
             $parameters = [];
-            for ($i = 0; $i < count($routeArray); $i++){
+            for ($i = 0; $i < count($routeArray); $i++) {
                 if ((strpos($routeArray[$i], '{') !== false) && (count($urlArray) == count($routeArray))) {
                     $routeArray[$i] = $urlArray[$i];
                     $parameters[] = $urlArray[$i];
