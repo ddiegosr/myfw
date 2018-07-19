@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: diego
- * Date: 02/07/18
- * Time: 20:37
- */
 
 namespace MyFw;
 
@@ -15,7 +9,15 @@ abstract class Model
     protected static $table;
     protected static $fillable = [];
 
-    public function __set($name, $value)
+    /**
+     * Intercepta a chamada $model->attribute = value e adiciona
+     * no array de atributos
+     *
+     * @param $name
+     * @param $value
+     * @throws \ErrorException
+     */
+    public function __set($name, $value): void
     {
         if (array_key_exists($name, $this->attributes)) {
             $this->attributes[$name] = $value;
@@ -27,6 +29,14 @@ abstract class Model
 
     }
 
+    /**
+     * Intercepta a chamada $model->attribute, verifica se o
+     * atributo existe no array de atributos e retorna caso exista
+     *
+     * @param $attribute
+     * @return mixed
+     * @throws \ErrorException
+     */
     public function __get($attribute)
     {
         if (array_key_exists($attribute, $this->attributes)) {
@@ -38,11 +48,24 @@ abstract class Model
             $trace[0]['line']);
     }
 
+    /**
+     * Seta os $attributes ao array de atributos
+     *
+     * @param array $attributes
+     */
     private function setAttributes(array $attributes): void
     {
         $this->attributes = $attributes;
     }
 
+    /**
+     * Verifica se existe o atributo $fillable e caso exista
+     * faz o filtro dos parametros da query exlcuindo
+     * os que não estiverem no $fillable
+     *
+     * @param array $attributes
+     * @return array
+     */
     private static function filterFillable(array $attributes)
     {
         if (!empty(static::$fillable)){
@@ -56,6 +79,12 @@ abstract class Model
         return $attributes;
     }
 
+    /**
+     * Inseri um registro na tabela em questão
+     *
+     * @param array $attributes
+     * @return bool
+     */
     public static function create(array $attributes): bool
     {
         $attributes = static::filterFillable($attributes);
@@ -87,6 +116,13 @@ abstract class Model
         return $stmt->execute();
     }
 
+    /**
+     * Executa a busca de um registro no banco de dados
+     * baseado no parâmetro $id
+     *
+     * @param int $id
+     * @return Model
+     */
     public static function find(int $id): Model
     {
         $pdo = Database::getConn();
@@ -102,6 +138,11 @@ abstract class Model
         return $novo;
     }
 
+    /**
+     * Retorna todos os registros da tabela em questão
+     *
+     * @return array
+     */
     public static function all(): array
     {
         $pdo = Database::getConn();
@@ -121,6 +162,12 @@ abstract class Model
         return $data;
     }
 
+    /**
+     * Atualiza um registro na tabela em questão
+     *
+     * @param array $attributes
+     * @return int
+     */
     public function update(array $attributes): int
     {
         $attributes = static::filterFillable($attributes);
@@ -147,6 +194,11 @@ abstract class Model
         return $stmt->rowCount();
     }
 
+    /**
+     * Deleta um registro da tabela em questão
+     *
+     * @return int
+     */
     public function delete(): int
     {
         $pdo = Database::getConn();

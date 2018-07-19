@@ -10,11 +10,22 @@ class Database
 {
     private static $instance = null;
 
+    /**
+     * Retorna uma instância da classe PDO
+     * no padrão Singleton
+     *
+     * @return PDO
+     */
     public static function getConn(): PDO
     {
         return self::connect();
     }
 
+    /**
+     * Conecta ao banco de dados com padrão Singleton
+     *
+     * @return PDO
+     */
     private static function connect(): PDO
     {
         $configs = Config::Database();
@@ -32,14 +43,24 @@ class Database
         return self::$instance;
     }
 
+    /**
+     * Previne que a classe seja instância
+     * com o operador new de fora dessa classe
+     */
     private function __construct()
     {
     }
 
+    /**
+     * Previne a clonagem dessa instância da classe
+     */
     private function __clone()
     {
     }
 
+    /**
+     * Previne a desserialização da instância dessa classe
+     */
     private function __wakeup()
     {
     }

@@ -1,23 +1,28 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: diego
- * Date: 06/07/18
- * Time: 01:23
- */
 
 namespace MyFw;
 
 
 class Config
 {
-    private static function loadConfigs()
+    /**
+     * Carrega o arquivo de configurações e retorna o array contido
+     *
+     * @return array
+     */
+    private static function loadConfigs(): array
     {
         $configs = require __DIR__ . "/../../app/config.php";
         return $configs;
     }
 
-    public static function Database()
+    /**
+     * Retorna um array com os valores do indice de Database
+     * presente no arquivo de configurações
+     *
+     * @return array
+     */
+    public static function Database(): array
     {
         $configs = self::loadConfigs();
         return $configs['database'];
