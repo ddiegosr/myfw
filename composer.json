@@ -4,8 +4,7 @@
   "keywords": ["framework", "simple"],
   "license": "MIT",
   "type": "project",
-  "minimum-stability": "dev",
-  "prefer-stable": true
+  "minimum-stability": "stable",
   "homepage": "https://github.com/ddiegosr/myfw",
   "authors": [
     {"name": "Diego Rodrigues", "email":"ddiegosr@hotmail.com"}
