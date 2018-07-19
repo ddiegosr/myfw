@@ -3,6 +3,8 @@
 namespace MyFw;
 
 
+use MyFw\exceptions\ViewException;
+
 class View extends Tokenizer
 {
     private $layout;
@@ -216,6 +218,12 @@ class View extends Tokenizer
      */
     private function compileLayout(string $layoutName): string
     {
+        $pieces = explode('/', $layoutName);
+        $pieces = end($pieces);
+        if (!file_exists($layoutName)) {
+            $layout = explode('.', $pieces)[0];
+            throw new ViewException("Layout $layout não foi encontrado");
+        }
         $file = fopen($layoutName, 'r');
         $result = '';
         while (!feof($file)) {
@@ -250,22 +258,25 @@ class View extends Tokenizer
      * Renderiza uma view passada pelo parâmetro $view
      * e caso $data não seja vazia, passa os valores para a view
      *
-     * @param string $view
+     * @param string $viewName
      * @param array $data
      * @throws \ErrorException
      */
-    public function render(string $view, array $data = []): void
+    public function render(string $viewName, array $data = []): void
     {
 
         if (!empty($data)) {
             extract($data);
         }
 
-        if(strpos($view, '.') !== false){
-            $view = str_replace('.', DIRECTORY_SEPARATOR, $view);
+        if(strpos($viewName, '.') !== false){
+            $viewName = str_replace('.', DIRECTORY_SEPARATOR, $viewName);
         }
 
-        $view = __DIR__ . "/../../app/views/{$view}.phtml";
+        $view = __DIR__ . "/../../app/views/{$viewName}.phtml";
+        if (!file_exists($view)) {
+            throw new ViewException("View $viewName não encontrada");
+        }
         $this->setLayout($view);
 
         if ($this->layout != null) {

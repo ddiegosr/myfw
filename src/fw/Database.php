@@ -3,6 +3,7 @@
 namespace MyFw;
 
 
+use MyFw\exceptions\DatabaseException;
 use PDO;
 use PDOException;
 
@@ -15,6 +16,7 @@ class Database
      * no padrão Singleton
      *
      * @return PDO
+     * @throws DatabaseException
      */
     public static function getConn(): PDO
     {
@@ -25,6 +27,7 @@ class Database
      * Conecta ao banco de dados com padrão Singleton
      *
      * @return PDO
+     * @throws DatabaseException
      */
     private static function connect(): PDO
     {
@@ -36,8 +39,7 @@ class Database
             self::$instance->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             self::$instance->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_OBJ);
         } catch (PDOException $e) {
-            echo $e->getMessage();
-            die;
+            throw new DatabaseException($e->getMessage(), $e->getCode());
         }
 
         return self::$instance;

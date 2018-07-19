@@ -5,6 +5,7 @@ namespace MyFw;
 
 use Closure;
 use Exception;
+use MyFw\exceptions\RouteException;
 
 class Router
 {
@@ -117,7 +118,7 @@ class Router
     private function add(string $method, string $uri, $callable): void
     {
         if ($this->routeExists($method, $uri)) {
-            echo "Rota $uri duplicada no método $uri";
+            throw new RouteException("Rota $uri duplicada no método $method");
         } else {
             $this->routes[$method][$uri] = $callable;
         }
