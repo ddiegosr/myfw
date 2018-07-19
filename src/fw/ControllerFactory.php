@@ -15,7 +15,7 @@ class ControllerFactory
     public static function build(string $controllerName)
     {
         $controller = "\App\controllers\\{$controllerName}";
-        if (!file_exists(__DIR__ . "/../app/controllers/{$controllerName}.php")) {
+        if (!file_exists(__DIR__ . "/../../app/controllers/{$controllerName}.php")) {
             throw new \Exception("O controller $controllerName não foi encontrado");
         }
 
