@@ -61,13 +61,13 @@ Todos os controllers do MyFw ficam dentro de app/controllers. Não há nenhuma e
 
 No MyFw os models da aplicação ficam em app/models, e devem extender da classe Model. Os models do MyFw contam com alguns métodos iniciais(simples) e com dois atributos essenciais para a execução correta dos mesmos. São eles:
 
-* ***string* $table - **Guarda o nome da tabela que o model irá cuidar.
-* ***array* $fillable - **Usado para garantir que somente as colunas presentes nesse array serão manipuladas.
-* ***bool* create(*array* $attributes) - **Realiza uma inserção na tabela. Retornando um booleando *true* em caso de sucesso e *false* em caso de falha.
-* ***Model* find(int $id) - **Realiza uma busca na tabela por um registro com id = $id. Retorna uma objeto de Model.
-* ***array* all() - **Retorna um array com todos os registros da tabela, onde cada indice do array é um objeto de Model.
-* ***int* update(*array* $attributes) - ** Atualiza um registro na tabela seguindo o que foi passado em $attributes. O parâmetro deve ser um array onde a chave é o nome da coluna no banco de dados e o valor deve ser o valor a ser preenchido na tabela. Retorna um inteiro com a quantidade de registros atualizados.
-* ***int* delete() - **Deleta um registro da tabela.
+* __*string* $table__ - Guarda o nome da tabela que o model irá cuidar.
+* __*array* $fillable__ - Usado para garantir que somente as colunas presentes nesse array serão manipuladas.
+* __*bool* create(*array* $attributes)__ - Realiza uma inserção na tabela. Retornando um booleando *true* em caso de sucesso e *false* em caso de falha.
+* __*Model* find(int $id)__ - Realiza uma busca na tabela por um registro com id = $id. Retorna uma objeto de Model.
+* __*array* all()__ - Retorna um array com todos os registros da tabela, onde cada indice do array é um objeto de Model.
+* __*int* update(*array* $attributes)__ - Atualiza um registro na tabela seguindo o que foi passado em $attributes. O parâmetro deve ser um array onde a chave é o nome da coluna no banco de dados e o valor deve ser o valor a ser preenchido na tabela. Retorna um inteiro com a quantidade de registros atualizados.
+* __*int* delete()__ - Deleta um registro da tabela.
 
 Os atributos são estáticos e protegidos.  Aqui em baixo temos um exemplo de model.
 
