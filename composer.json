@@ -5,7 +5,7 @@
   "license": "MIT",
   "type": "project",
   "minimum-stability": "dev",
-  "prefer-stable": true
+  "prefer-stable": true,
   "homepage": "https://github.com/ddiegosr/myfw",
   "authors": [
     {"name": "Diego Rodrigues", "email":"ddiegosr@hotmail.com"}
