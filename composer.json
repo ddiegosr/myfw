@@ -1,6 +1,10 @@
 {
   "name": "ddiegosr/myfw",
   "description": "A simple micro framework",
+  "type": "project",
+  "license": "MIT",
+  "minimum-stability": "stable",
+  "homepage": "https://github.com/ddiegosr/myfw",
   "authors": [
     {"name": "Diego Rodrigues", "email":"ddiegosr@hotmail.com"}
   ],
