@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: diego
- * Date: 02/07/18
- * Time: 20:39
- */
 
 namespace MyFw;
 
@@ -16,12 +10,12 @@ class Database
 {
     private static $instance = null;
 
-    public static function getConn()
+    public static function getConn(): PDO
     {
         return self::connect();
     }
 
-    private static function connect()
+    private static function connect(): PDO
     {
         $configs = Config::Database();
         $options = [PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES {$configs['charset']}"];
@@ -36,6 +30,18 @@ class Database
         }
 
         return self::$instance;
+    }
+
+    private function __construct()
+    {
+    }
+
+    private function __clone()
+    {
+    }
+
+    private function __wakeup()
+    {
     }
 
 }
