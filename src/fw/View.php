@@ -14,7 +14,7 @@ class View extends Tokenizer
      *
      * View constructor.
      */
-    private function __construct()
+    public function __construct()
     {
         /*
          * Engine: { $varname = value }
@@ -125,7 +125,7 @@ class View extends Tokenizer
             $line = fgets($file);
 
             if (preg_match($this->getLayoutRule(), $line, $matches)) {
-                $this->layout = __DIR__ . "/../app/views/layout/{$matches[1]}.phtml";
+                $this->layout = __DIR__ . "/../../app/views/layout/{$matches[1]}.phtml";
                 break;
             }
         }
@@ -178,9 +178,12 @@ class View extends Tokenizer
 
             if (preg_match($this->getSectionRuleByKey('openingTag'), $line, $matches)) {
                 $sectionName = $matches[1];
+                $contentBlocks[$sectionName] = '';
             }
 
-            $contentBlocks[$sectionName] .= $line;
+            if (!empty($sectionName)) {
+                $contentBlocks[$sectionName] .= $line;
+            }
 
             if (preg_match($this->getSectionRuleByKey('closingTag'), $line, $matches)) {
                 $sectionName = '';
@@ -214,13 +217,13 @@ class View extends Tokenizer
         while (!feof($file)) {
             $line = fgets($file);
 
-            preg_match($this->getConstructRule(), $line, $matches);
-            if (array_key_exists($matches[1], $this->getBlocks())) {
-                $line = preg_replace($this->getConstructRule(), $this->getBlocks()[$matches[1]], $line);
-            } else {
-                $line = preg_replace($this->getConstructRule(), "", $line);
+            if(preg_match($this->getConstructRule(), $line, $matches)) {
+                if (array_key_exists($matches[1], $this->getBlocks())) {
+                    $line = preg_replace($this->getConstructRule(), $this->getBlocks()[$matches[1]], $line);
+                } else {
+                    $line = preg_replace($this->getConstructRule(), "", $line);
+                }
             }
-
             $result .= $line;
         }
         fclose($file);
@@ -252,6 +255,10 @@ class View extends Tokenizer
 
         if (!empty($data)) {
             extract($data);
+        }
+
+        if(strpos($view, '.') !== false){
+            $view = str_replace('.', DIRECTORY_SEPARATOR, $view);
         }
 
         $view = __DIR__ . "/../../app/views/{$view}.phtml";
