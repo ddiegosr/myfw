@@ -125,7 +125,11 @@ class View extends Tokenizer
             $line = fgets($file);
 
             if (preg_match($this->getLayoutRule(), $line, $matches)) {
-                $this->layout = __DIR__ . "/../../app/views/layout/{$matches[1]}.phtml";
+                $layout = $matches[1];
+                if(strpos($matches[1], '.') !== false){
+                    $layout = str_replace('.', DIRECTORY_SEPARATOR, $layout);
+                }
+                $this->layout = __DIR__ . "/../../app/views/layout/{$layout}.phtml";
                 break;
             }
         }
